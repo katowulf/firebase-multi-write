@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+    <link rel="stylesheet" href="lib/mocha.css" />
+</head>
+<body>
+
+<div id="mocha"></div>
+
+<!-- code -->
+<script src="../FirebaseMultiWrite.js"></script>
+
+<!-- libs -->
+<script src="http://cdn.firebase.com/js/client/1.0.2/firebase.js"></script>
+<script src="lib/lodash.js"></script>
+<script src="lib/mocha.js"></script>
+<script src="lib/chai.js"></script>
+<script src="lib/sinon.js"></script>
+<script src="lib/sinon-chai.js"></script>
+<script>mocha.setup('bdd')</script>
+<script src="lib/helpers.js"></script>
+
+<!-- tests -->
+<script src="test.FirebaseMultiWrite.js"></script>
+<script src="test.e2e.js"></script>
+
+<script>
+    mocha.checkLeaks();
+    // long polling leaks these from Firebase; they aren't part of this lib
+    mocha.globals(['pLPCommand1', 'pRTLPCB1', 'pLPCommand2', 'pRTLPCB2']);
+    mocha.run();
+</script>
+
+</body>
+</html>

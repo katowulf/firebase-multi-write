@@ -1,0 +1,27 @@
+{
+   "rules": {
+      "counters": {
+         "$counter": {
+            ".read": true,
+            ".write": "newData.isNumber() && ( (!data.exists() && newData.val() === 1) || newData.val() === data.val() + 1 )"
+         }
+      },
+
+      "data": {
+         "$atomic_path": {
+            ".read": true,
+            // .validate allows these records to be deleted, use .write to prevent deletions
+            // we use newData.parent().parent() instead of root because this allows for us to
+            // do a set/update that pushes the counter and the records at the same time (like
+            // when we set at root during test units)
+            ".validate": "newData.hasChildren(['update_counter', 'update_key']) && newData.parent().parent().child('counters/'+newData.child('update_key').val()).val() === newData.child('update_counter').val()",
+            "update_counter": {
+               ".validate": "newData.isNumber()"
+            },
+            "update_key": {
+               ".validate": "newData.isString()"
+            }
+         }
+      }
+   }
+}
