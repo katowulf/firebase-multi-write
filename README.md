@@ -1,7 +1,7 @@
 firebase-multi-write
 ====================
 
-Write to multiple paths in Firebase atomically.
+Write to multiple paths in Firebase atomically. This is done using an update_counter to enforce that concurrent writes cannot cause records to become out of sync, and by using rollbacks if any write op fails.
 
 ## Do you need this?
 
@@ -91,6 +91,13 @@ Create a new instance of FirebaseMultiWrite for each write operation.
    * As with all transactions, **do not call set** on paths where you use these commits
    * Do not try to use this with primitives
    * Transactions will be slow with many thousand writes per minute (at that point, you need to optimize writes to a smaller data set on a single path)
+   * Loss of network connection which is never recovered (a very rare case) could still result in inconsistent records (see below)
+
+In theory, if a network connection drops between two write ops, data could still become inconsistent. This is highly unlikely, since it requires multiple fail points all in the blink of any eye, but could occur.
+
+For example, if one one write succeeds, network connection is lost, user shuts down browser and does not wait for reconnect (which for spotty access should come right back without them even knowing it's down). In this case, there is no way to rollback the successful write. 
+
+However, the update counters are extremely helpful in this case to see that data is inconsistent. By comparing the counters between records, it would be simple to tell that they are out of sync. If this use case concerns you, keep an audit table with the last 3 or 4 writes and, in the case of a sync error, just revert to the last successful event.
 
 ## How it works
 
