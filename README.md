@@ -7,16 +7,13 @@ Write to multiple paths in Firebase atomically.
 
 Generally, you do not need this if:
 
-  * you are not writing with high concurrency (hundreds of write opes per minute to the SAME record by DIFFERENT users)
+  * you are not writing with high concurrency (hundreds of write ops per minute to the SAME record by DIFFERENT users)
   * your dependencies are straightforward (B depends on A, and C depends on A, but A does not depend on B or C)
   * your data can be merged into a single path
 
 Developers are a bit too worried about orphaned records appearing in their data.
 The chance of a web socket failing between one write and the other is probably trivial and somewhere on the order of collisions between
-timestamp based IDs. That’s not to say it’s impossible, but it's generally low consequency, highly unlikely, and shouldn’t be your primary concern.
-
-Also, orphans are extremely easy to clean up with a script or even just by typing a few lines of code into the JS console. So again,
-they tend to be very low consequence.
+timestamp based IDs. That’s not to say it’s impossible, but it's generally low consequence, highly unlikely, and extremely easy to clean up with a script or even just by typing a few lines of code into the JS console. So it shouldn’t be your primary concern.
 
 ## What can you do instead of this?
 
