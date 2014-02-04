@@ -103,8 +103,8 @@ However, the update counters are extremely helpful in this case to see that data
 
 Assuming the example shown under Usage above:
 
-   1. When you call writer.commit(), a new ID is created in update_counters/counter/<code>hashOfPathUrls</code>/current.
+   1. When you call transaction.commit(), a new ID is created in counters/<code>idForPathUrls</code>
+   1. <code>idForPathUrls</code> represents a unique ID for the combination of paths being written (created by joining the URLs with a ; for each set() path)
    1. The write operations are committed using transactions, to ensure the counters match
-   1. If another concurrent edit is made that updates the counters, the write is cancelled (the later update wins) and no writes take place
-   1. If the counter is successfully updated, but one of the write ops fail for other reason, the writes are rolled back to the previous value (this is also done atomically and only if another update does not occur after this, if they cannot be reverted, then data may still become inconsistent
-   1. A successful write places values into an audit log under update_counters/counter/<code>hashOfPathUrls</code>/audit/pathUrl
+   1. If another concurrent edit is made that updates the counters, the write is cancelled (the later update wins)     1. If one of the write ops fails but another has already committed, we'll attempt to roll the successful op back to its previous value as well (if they cannot be reverted because security rules changed mid-stream or we lost connectivity, then data may still become inconsistent until the next update)
+
