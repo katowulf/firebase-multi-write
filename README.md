@@ -73,7 +73,7 @@ Create a new instance of FirebaseMultiWrite for each write operation.
     var fb = new Firebase('https://INSTANCE.firebaseio.com/');
 
     // create a new transaction
-    var pathToStoreUpdateCounters = fb.child('update_counters');
+    var pathToStoreUpdateCounters = fb.child('counters');
     var transaction = new FirebaseMultiWrite( pathToStoreUpdateCounters );
 
     // add the data we will send
