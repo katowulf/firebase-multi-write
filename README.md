@@ -106,5 +106,5 @@ Assuming the example shown under Usage above:
    1. When you call transaction.commit(), a new ID is created in counters/<code>idForPathUrls</code>
    1. <code>idForPathUrls</code> represents a unique ID for the combination of paths being written (created by joining the set() paths with a ;)
    1. The write operations are committed using transactions, to ensure the counters match
-   1. If another concurrent edit is made that updates the counters, the write is cancelled (the later update wins)     1. If one of the write ops fails but another has already committed, we'll attempt to roll the successful op back to its previous value as well (if they cannot be reverted because security rules changed mid-stream or we lost connectivity, then data may still become inconsistent until the next update)
-
+   1. If another concurrent edit is made that updates the counters, the write is cancelled (the later update wins)
+   1. If one of the write ops fails but another has already committed, we'll attempt to roll the successful op back to its previous value as well (if they cannot be reverted because security rules changed mid-stream or we lost connectivity, then data may still become inconsistent until the next update)
