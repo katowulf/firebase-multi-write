@@ -12,8 +12,8 @@ Generally, you do not need this if:
   * your data can be merged into a single path
 
 Developers are a bit too worried about orphaned records appearing in their data.
-The chance of a web socket failing between one write and the other is probably trivial and somewhere on the order of collisions between
-timestamp based IDs. That’s not to say it’s impossible, but it's generally low consequence, highly unlikely, and extremely easy to clean up with a script or even just by typing a few lines of code into the JS console. So it shouldn’t be your primary concern.
+The chance of a web socket failing between one write and the other is minor and, while not on the magnitude of collisions between
+timestamp based IDs, still probably trivial. Since it's generally low consequence, highly unlikely, and extremely easy to clean up with a script or even just by typing a few lines of code into the JS console, it should not, generally speaking, be your primary concern.
 
 ## What can you do instead of this?
 
