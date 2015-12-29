@@ -1,6 +1,8 @@
 firebase-multi-write
 ====================
 
+<p stlye="color:red">NOTE THAT WRITES TO MULTIPLE PATHS ARE NOW PART OF THE CORE API. See [this blog post](https://www.firebase.com/blog/2015-09-24-atomic-writes-and-more.html) for details.</p>
+
 Write to multiple paths in Firebase atomically. This is done using an update_counter to enforce that concurrent writes cannot cause records to become out of sync, and by using rollbacks if any write op fails.
 
 ## Do you need this?
